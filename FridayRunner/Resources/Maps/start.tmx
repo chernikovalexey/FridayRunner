@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" renderorder="right-down" width="32" height="32" tilewidth="96" tileheight="48" nextobjectid="1">
+ <tileset firstgid="1" name="floor" tilewidth="96" tileheight="48">
+  <image source="floor.png" width="576" height="288"/>
+ </tileset>
+ <layer name="floor" width="32" height="32">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3VoREAQAgDwaDov+O3OGQyz4nV3ICgJBVWzXz7DYBf9eBuAQDgioTfm9Dg7kjZwRUPdRAS1wAQAAA=
+  </data>
+ </layer>
+</map>

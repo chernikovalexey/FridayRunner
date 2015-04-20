@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" renderorder="right-down" width="6" height="6" tilewidth="96" tileheight="48" nextobjectid="1">
+ <tileset firstgid="1" name="renderedLayout.png" tilewidth="96" tileheight="48">
+  <image source="renderedLayout.png" width="960" height="480"/>
+ </tileset>
+ <tileset firstgid="101" name="BBLayout.png" tilewidth="96" tileheight="48">
+  <image source="BBLayout.png" width="960" height="480"/>
+ </tileset>
+ <layer name="floor" width="6" height="6">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYBxEGAAK+AAl
+  </data>
+ </layer>
+ <layer name="walls" width="6" height="6">
+  <data encoding="base64" compression="zlib">
+   eJzjZmBg0AZiUQZUwAvETECshSYPE4dhRSziPEAsDxXXBGJxKJaHqsMHAJI4Abg=
+  </data>
+ </layer>
+ <layer name="BB" width="6" height="6" opacity="0.16">
+  <data encoding="base64" compression="zlib">
+   eJzLZ2Bg6AfiSgZUUAjEaUDchyYPE4fhViziBUDcDBXvBeJqKG6GqsMHAIg1CrQ=
+  </data>
+ </layer>
+</map>

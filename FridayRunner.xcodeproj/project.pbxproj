@@ -15,6 +15,17 @@
 		0C0242DA1AE29C7A004B7AE5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C0242D91AE29C7A004B7AE5 /* Images.xcassets */; };
 		0C0242DD1AE29C7A004B7AE5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C0242DB1AE29C7A004B7AE5 /* LaunchScreen.xib */; };
 		0C0242E91AE29C7A004B7AE5 /* FridayRunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0242E81AE29C7A004B7AE5 /* FridayRunnerTests.swift */; };
+		0C0242F81AE29CAB004B7AE5 /* JSTileMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0242F51AE29CAB004B7AE5 /* JSTileMap.m */; };
+		0C0242F91AE29CAB004B7AE5 /* LFCGzipUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C0242F71AE29CAB004B7AE5 /* LFCGzipUtility.m */; };
+		0C0242FB1AE29CD9004B7AE5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C0242FA1AE29CD9004B7AE5 /* libz.dylib */; };
+		0C0243011AE29DD8004B7AE5 /* start.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 0C0242FE1AE29DD8004B7AE5 /* start.tmx */; };
+		0C0243021AE29DD8004B7AE5 /* floor.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C0243001AE29DD8004B7AE5 /* floor.png */; };
+		0C0243051AE2A860004B7AE5 /* player.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C0243041AE2A860004B7AE5 /* player.png */; };
+		0C0243081AE3CE94004B7AE5 /* BBLayout.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C0243061AE3CE94004B7AE5 /* BBLayout.png */; };
+		0C0243091AE3CE94004B7AE5 /* renderedLayout.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C0243071AE3CE94004B7AE5 /* renderedLayout.png */; };
+		0C02430B1AE3CE9D004B7AE5 /* layout map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 0C02430A1AE3CE9D004B7AE5 /* layout map.tmx */; };
+		0C3289151AE4401300E897CD /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3289141AE4401300E897CD /* GameObject.swift */; };
+		0C3289181AE440E800E897CD /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3289171AE440E800E897CD /* Player.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,11 +46,25 @@
 		0C0242D21AE29C7A004B7AE5 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		0C0242D41AE29C7A004B7AE5 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		0C0242D71AE29C7A004B7AE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		0C0242D91AE29C7A004B7AE5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		0C0242D91AE29C7A004B7AE5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		0C0242DC1AE29C7A004B7AE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		0C0242E21AE29C7A004B7AE5 /* FridayRunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FridayRunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C0242E71AE29C7A004B7AE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C0242E81AE29C7A004B7AE5 /* FridayRunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridayRunnerTests.swift; sourceTree = "<group>"; };
+		0C0242F31AE29CAB004B7AE5 /* FridayRunner-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FridayRunner-Bridging-Header.h"; sourceTree = "<group>"; };
+		0C0242F41AE29CAB004B7AE5 /* JSTileMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTileMap.h; sourceTree = "<group>"; };
+		0C0242F51AE29CAB004B7AE5 /* JSTileMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTileMap.m; sourceTree = "<group>"; };
+		0C0242F61AE29CAB004B7AE5 /* LFCGzipUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFCGzipUtility.h; sourceTree = "<group>"; };
+		0C0242F71AE29CAB004B7AE5 /* LFCGzipUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFCGzipUtility.m; sourceTree = "<group>"; };
+		0C0242FA1AE29CD9004B7AE5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		0C0242FE1AE29DD8004B7AE5 /* start.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = start.tmx; sourceTree = "<group>"; };
+		0C0243001AE29DD8004B7AE5 /* floor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floor.png; sourceTree = "<group>"; };
+		0C0243041AE2A860004B7AE5 /* player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player.png; sourceTree = "<group>"; };
+		0C0243061AE3CE94004B7AE5 /* BBLayout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BBLayout.png; sourceTree = "<group>"; };
+		0C0243071AE3CE94004B7AE5 /* renderedLayout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = renderedLayout.png; sourceTree = "<group>"; };
+		0C02430A1AE3CE9D004B7AE5 /* layout map.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "layout map.tmx"; sourceTree = "<group>"; };
+		0C3289141AE4401300E897CD /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
+		0C3289171AE440E800E897CD /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C0242FB1AE29CD9004B7AE5 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				0C0242CB1AE29C7A004B7AE5 /* FridayRunner */,
+				0C3289161AE4408500E897CD /* Libraries */,
 				0C0242E51AE29C7A004B7AE5 /* FridayRunnerTests */,
 				0C0242CA1AE29C7A004B7AE5 /* Products */,
 			);
@@ -81,14 +108,14 @@
 		0C0242CB1AE29C7A004B7AE5 /* FridayRunner */ = {
 			isa = PBXGroup;
 			children = (
+				0C0242F21AE29CAB004B7AE5 /* JSTileMap */,
 				0C0242CE1AE29C7A004B7AE5 /* AppDelegate.swift */,
 				0C0242D01AE29C7A004B7AE5 /* GameScene.sks */,
 				0C0242D21AE29C7A004B7AE5 /* GameScene.swift */,
+				0C3289141AE4401300E897CD /* GameObject.swift */,
+				0C3289171AE440E800E897CD /* Player.swift */,
 				0C0242D41AE29C7A004B7AE5 /* GameViewController.swift */,
-				0C0242D61AE29C7A004B7AE5 /* Main.storyboard */,
-				0C0242D91AE29C7A004B7AE5 /* Images.xcassets */,
-				0C0242DB1AE29C7A004B7AE5 /* LaunchScreen.xib */,
-				0C0242CC1AE29C7A004B7AE5 /* Supporting Files */,
+				0C0242FC1AE29DD8004B7AE5 /* Resources */,
 			);
 			path = FridayRunner;
 			sourceTree = "<group>";
@@ -99,6 +126,7 @@
 				0C0242CD1AE29C7A004B7AE5 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		0C0242E51AE29C7A004B7AE5 /* FridayRunnerTests */ = {
@@ -116,6 +144,69 @@
 				0C0242E71AE29C7A004B7AE5 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0C0242F21AE29CAB004B7AE5 /* JSTileMap */ = {
+			isa = PBXGroup;
+			children = (
+				0C0242F31AE29CAB004B7AE5 /* FridayRunner-Bridging-Header.h */,
+				0C0242F41AE29CAB004B7AE5 /* JSTileMap.h */,
+				0C0242F51AE29CAB004B7AE5 /* JSTileMap.m */,
+				0C0242F61AE29CAB004B7AE5 /* LFCGzipUtility.h */,
+				0C0242F71AE29CAB004B7AE5 /* LFCGzipUtility.m */,
+			);
+			path = JSTileMap;
+			sourceTree = "<group>";
+		};
+		0C0242FC1AE29DD8004B7AE5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0C0243031AE2A860004B7AE5 /* Mobs */,
+				0C0242FD1AE29DD8004B7AE5 /* Maps */,
+				0C0242FF1AE29DD8004B7AE5 /* Tiles */,
+				0C0242D61AE29C7A004B7AE5 /* Main.storyboard */,
+				0C0242D91AE29C7A004B7AE5 /* Images.xcassets */,
+				0C0242DB1AE29C7A004B7AE5 /* LaunchScreen.xib */,
+				0C0242CC1AE29C7A004B7AE5 /* Supporting Files */,
+			);
+			name = Resources;
+			path = FridayRunner/Resources;
+			sourceTree = SOURCE_ROOT;
+		};
+		0C0242FD1AE29DD8004B7AE5 /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				0C0242FE1AE29DD8004B7AE5 /* start.tmx */,
+				0C02430A1AE3CE9D004B7AE5 /* layout map.tmx */,
+			);
+			path = Maps;
+			sourceTree = "<group>";
+		};
+		0C0242FF1AE29DD8004B7AE5 /* Tiles */ = {
+			isa = PBXGroup;
+			children = (
+				0C0243061AE3CE94004B7AE5 /* BBLayout.png */,
+				0C0243071AE3CE94004B7AE5 /* renderedLayout.png */,
+				0C0243001AE29DD8004B7AE5 /* floor.png */,
+			);
+			path = Tiles;
+			sourceTree = "<group>";
+		};
+		0C0243031AE2A860004B7AE5 /* Mobs */ = {
+			isa = PBXGroup;
+			children = (
+				0C0243041AE2A860004B7AE5 /* player.png */,
+			);
+			name = Mobs;
+			path = FridayRunner/Resources/Mobs;
+			sourceTree = SOURCE_ROOT;
+		};
+		0C3289161AE4408500E897CD /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				0C0242FA1AE29CD9004B7AE5 /* libz.dylib */,
+			);
+			name = Libraries;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,6 +289,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C0243051AE2A860004B7AE5 /* player.png in Resources */,
+				0C0243081AE3CE94004B7AE5 /* BBLayout.png in Resources */,
+				0C0243021AE29DD8004B7AE5 /* floor.png in Resources */,
+				0C02430B1AE3CE9D004B7AE5 /* layout map.tmx in Resources */,
+				0C0243091AE3CE94004B7AE5 /* renderedLayout.png in Resources */,
+				0C0243011AE29DD8004B7AE5 /* start.tmx in Resources */,
 				0C0242DD1AE29C7A004B7AE5 /* LaunchScreen.xib in Resources */,
 				0C0242DA1AE29C7A004B7AE5 /* Images.xcassets in Resources */,
 				0C0242D11AE29C7A004B7AE5 /* GameScene.sks in Resources */,
@@ -220,8 +317,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C0242D31AE29C7A004B7AE5 /* GameScene.swift in Sources */,
+				0C0242F91AE29CAB004B7AE5 /* LFCGzipUtility.m in Sources */,
+				0C3289151AE4401300E897CD /* GameObject.swift in Sources */,
 				0C0242D51AE29C7A004B7AE5 /* GameViewController.swift in Sources */,
+				0C3289181AE440E800E897CD /* Player.swift in Sources */,
 				0C0242CF1AE29C7A004B7AE5 /* AppDelegate.swift in Sources */,
+				0C0242F81AE29CAB004B7AE5 /* JSTileMap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +351,7 @@
 				0C0242D71AE29C7A004B7AE5 /* Base */,
 			);
 			name = Main.storyboard;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		0C0242DB1AE29C7A004B7AE5 /* LaunchScreen.xib */ = {
@@ -258,6 +360,7 @@
 				0C0242DC1AE29C7A004B7AE5 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -353,6 +456,7 @@
 				INFOPLIST_FILE = FridayRunner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FridayRunner/JSTileMap/FridayRunner-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -363,6 +467,7 @@
 				INFOPLIST_FILE = FridayRunner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FridayRunner/JSTileMap/FridayRunner-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -419,6 +524,7 @@
 				0C0242EE1AE29C7A004B7AE5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0C0242EF1AE29C7A004B7AE5 /* Build configuration list for PBXNativeTarget "FridayRunnerTests" */ = {
 			isa = XCConfigurationList;
@@ -427,6 +533,7 @@
 				0C0242F11AE29C7A004B7AE5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

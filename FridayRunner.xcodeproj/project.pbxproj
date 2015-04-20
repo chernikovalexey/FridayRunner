@@ -26,6 +26,8 @@
 		0C02430B1AE3CE9D004B7AE5 /* layout map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 0C02430A1AE3CE9D004B7AE5 /* layout map.tmx */; };
 		0C3289151AE4401300E897CD /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3289141AE4401300E897CD /* GameObject.swift */; };
 		0C3289181AE440E800E897CD /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3289171AE440E800E897CD /* Player.swift */; };
+		0C677D9D1AE5236500400B89 /* simple_bullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C677D9C1AE5236500400B89 /* simple_bullet.png */; };
+		0C677D9F1AE55ED300400B89 /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C677D9E1AE55ED300400B89 /* Bullet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +44,7 @@
 		0C0242C91AE29C7A004B7AE5 /* FridayRunner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FridayRunner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C0242CD1AE29C7A004B7AE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C0242CE1AE29C7A004B7AE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0C0242D01AE29C7A004B7AE5 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		0C0242D01AE29C7A004B7AE5 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = GameScene.sks; path = ../GameScene.sks; sourceTree = "<group>"; };
 		0C0242D21AE29C7A004B7AE5 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		0C0242D41AE29C7A004B7AE5 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		0C0242D71AE29C7A004B7AE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -65,6 +67,8 @@
 		0C02430A1AE3CE9D004B7AE5 /* layout map.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "layout map.tmx"; sourceTree = "<group>"; };
 		0C3289141AE4401300E897CD /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		0C3289171AE440E800E897CD /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		0C677D9C1AE5236500400B89 /* simple_bullet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = simple_bullet.png; sourceTree = "<group>"; };
+		0C677D9E1AE55ED300400B89 /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,12 +113,12 @@
 			isa = PBXGroup;
 			children = (
 				0C0242F21AE29CAB004B7AE5 /* JSTileMap */,
-				0C0242CE1AE29C7A004B7AE5 /* AppDelegate.swift */,
-				0C0242D01AE29C7A004B7AE5 /* GameScene.sks */,
 				0C0242D21AE29C7A004B7AE5 /* GameScene.swift */,
 				0C3289141AE4401300E897CD /* GameObject.swift */,
 				0C3289171AE440E800E897CD /* Player.swift */,
+				0C677D9E1AE55ED300400B89 /* Bullet.swift */,
 				0C0242D41AE29C7A004B7AE5 /* GameViewController.swift */,
+				0C0242CE1AE29C7A004B7AE5 /* AppDelegate.swift */,
 				0C0242FC1AE29DD8004B7AE5 /* Resources */,
 			);
 			path = FridayRunner;
@@ -164,6 +168,8 @@
 				0C0243031AE2A860004B7AE5 /* Mobs */,
 				0C0242FD1AE29DD8004B7AE5 /* Maps */,
 				0C0242FF1AE29DD8004B7AE5 /* Tiles */,
+				0C677D9B1AE5236500400B89 /* Bullets */,
+				0C0242D01AE29C7A004B7AE5 /* GameScene.sks */,
 				0C0242D61AE29C7A004B7AE5 /* Main.storyboard */,
 				0C0242D91AE29C7A004B7AE5 /* Images.xcassets */,
 				0C0242DB1AE29C7A004B7AE5 /* LaunchScreen.xib */,
@@ -208,6 +214,15 @@
 			);
 			name = Libraries;
 			sourceTree = "<group>";
+		};
+		0C677D9B1AE5236500400B89 /* Bullets */ = {
+			isa = PBXGroup;
+			children = (
+				0C677D9C1AE5236500400B89 /* simple_bullet.png */,
+			);
+			name = Bullets;
+			path = FridayRunner/Resources/Bullets;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -297,6 +312,7 @@
 				0C0243011AE29DD8004B7AE5 /* start.tmx in Resources */,
 				0C0242DD1AE29C7A004B7AE5 /* LaunchScreen.xib in Resources */,
 				0C0242DA1AE29C7A004B7AE5 /* Images.xcassets in Resources */,
+				0C677D9D1AE5236500400B89 /* simple_bullet.png in Resources */,
 				0C0242D11AE29C7A004B7AE5 /* GameScene.sks in Resources */,
 				0C0242D81AE29C7A004B7AE5 /* Main.storyboard in Resources */,
 			);
@@ -323,6 +339,7 @@
 				0C3289181AE440E800E897CD /* Player.swift in Sources */,
 				0C0242CF1AE29C7A004B7AE5 /* AppDelegate.swift in Sources */,
 				0C0242F81AE29CAB004B7AE5 /* JSTileMap.m in Sources */,
+				0C677D9F1AE55ED300400B89 /* Bullet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

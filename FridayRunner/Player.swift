@@ -12,33 +12,37 @@ class Player: GameObject {
     init(gameScene: GameScene, position: CGPoint) {
         super.init(gameScene: gameScene, texture: SKTexture(imageNamed: "player.png"))
         super.position = position
+        super.name = "player"
         
-        self.physicsBody = SKPhysicsBody(texture: self.texture!, size: CGSize(width: 48, height: 48))
-        //self.physicsBody!.categoryBitMask = GameScene.E_GAMEOBJ
-        //self.physicsBody!.collisionBitMask = GameScene.E_GAMEOBJ
-        //self.physicsBody!.contactTestBitMask = GameScene.E_WALLS
-        //self.physicsBody!.mass = 1.2
-        //self.physicsBody!.friction = 1.0
-        //self.physicsBody!.angularDamping = 10.0
-        //self.physicsBody!.linearDamping = 30.0
-        //self.physicsBody!.restitution = 10.0
+        self.physicsBody = SKPhysicsBody(texture: self.texture!, size: self.texture!.size())
         self.physicsBody!.allowsRotation = false
-        //self.physicsBody!.usesPreciseCollisionDetection = true
+        
+        self.physicsBody!.categoryBitMask = GameScene.O_CHARACTER
+        self.physicsBody!.collisionBitMask = GameScene.O_OBSTACLE
+        self.physicsBody!.contactTestBitMask = GameScene.O_OBSTACLE
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var sx, sy: CGFloat!
+    func shoot(at: CGPoint) {
+        let angle: CGFloat = atan2(at.y - position.y, at.x - position.x)
+        var bullet: Bullet = Bullet(gameScene: gameScene, owner: self, position: CGPoint(x: self.position.x, y: self.position.y), direction: CGVector(dx: cos(angle), dy: sin(angle)))
+        
+        gameScene.world.addChild(bullet)
+    }
+    
+    func damage(points: Int) {
+        println("damage the player for ${points}")
+    }
     
     override func update(currentTime: CFTimeInterval) {
         super.update(currentTime)
         
         let speed: CGFloat = 4.475
         
-        //var sx: CGFloat!
-        //var sy: CGFloat!
+        var sx, sy: CGFloat!
         
         if(gameScene.fingerPoint == nil) {
             sx = 0.0
@@ -50,17 +54,13 @@ class Player: GameObject {
             sy = sin(angle) * speed
         }
         
-        let accX = -velocity.dx * groundFriction + sx
-        let accY = -velocity.dy * groundFriction + sy
+        let accX = -self.physicsBody!.velocity.dx * groundFriction + sx
+        let accY = -self.physicsBody!.velocity.dy * groundFriction + sy
         
-        velocity.dx = accX
-        velocity.dy = accY
+        self.physicsBody!.velocity.dx = accX * speed * 5
+        self.physicsBody!.velocity.dy = accY * speed * 5
         
-        //self.runAction(SKAction.moveBy(CGVector(dx: sx, dy: sy), duration: 1.025))
-        self.physicsBody!.velocity = CGVector(dx: velocity.dx * speed * 5, dy: velocity.dy * speed * 5)
-        //self.physicsBody!.applyImpulse(velocity)
-        
-        if(velocity.dx != 0.0 || velocity.dy != 0.0) {
+        if(accX != 0.0 || accY != 0.0) {
             gameScene.placeCameraAboveEntity(self)
         }
     }

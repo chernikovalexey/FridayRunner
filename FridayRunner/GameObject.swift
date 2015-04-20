@@ -11,9 +11,13 @@ import Foundation
 class GameObject: SKSpriteNode {
     var canMove: Bool! = true
     var gameScene: GameScene!
-    var velocity: CGVector! = CGVector(dx: 0.0, dy: 0.0)
     
     let groundFriction: CGFloat! = 1.0 / 1000.0
+    
+    init(gameScene: GameScene, sprite: SKSpriteNode) {
+        super.init(texture: sprite.texture, color: sprite.color, size: sprite.texture!.size())
+        self.gameScene = gameScene
+    }
     
     init(gameScene: GameScene, texture: SKTexture) {
         super.init(texture: texture, color: UIColor.clearColor(), size: texture.size())
@@ -21,10 +25,15 @@ class GameObject: SKSpriteNode {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError("")
     }
     
     func update(currentTime: CFTimeInterval) {
-        
+    }
+    
+    func collidedWith(obj: SKNode) {
+    }
+    
+    func hitBy(obj: SKNode) {
     }
 }

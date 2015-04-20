@@ -13,14 +13,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var player: Player!
     var fingerPoint: CGPoint!
     
-    static let E_WALLS: UInt32 = 1 << 0
-    static let E_GAMEOBJ: UInt32 = 1 << 1
+    static let O_OBSTACLE: UInt32 = 0x1 << 0
+    static let O_CHARACTER: UInt32 = 0x1 << 1
+    static let O_BULLET: UInt32 = 0x1 << 2
     
     override func didMoveToView(view: SKView) {
         self.world = JSTileMap(named: "layout map.tmx")
         self.addChild(world)
-        
-        
         
         // hide bb layer
         world.layerNamed("BB").hidden = true
@@ -44,19 +43,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 var tile: SKSpriteNode! = world.layerNamed("BB").tileAtCoord(CGPoint(x: x, y: y))
                 
                 if(tile != nil) {
+                    tile.name = "obstacle"
+                    
                     tile.physicsBody = SKPhysicsBody(texture: tile.texture!, size: CGSize(width: 96, height: 48))
-                    //tile.physicsBody!.categoryBitMask = GameScene.E_WALLS
-                    //tile.physicsBody!.collisionBitMask = GameScene.E_WALLS
-                    //tile.physicsBody!.contactTestBitMask = GameScene.E_GAMEOBJ
-                    //tile.physicsBody!.dynamic = false
-                    //tile.physicsBody!.restitution = 0.1
-                    //tile.physicsBody!.friction = 0.4
-                    //tile.physicsBody!.mass = 10.0
-                    tile.physicsBody!.dynamic=false
-                    //tile.zPosition = player.zPosition
-                    tile.physicsBody!.affectedByGravity=false
-                    //tile.removeFromParent()
-                    //world.addChild(tile)
+                    tile.physicsBody!.dynamic = false
+                    
+                    tile.physicsBody!.categoryBitMask = GameScene.O_OBSTACLE
                     
                     ++count
                 }
@@ -65,9 +57,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
-        println("contact")
-        if(contact.bodyA.node is Player || contact.bodyB.node is Player) {
-            println("player collision")
+        var collider, victim: SKNode!
+        
+        println("got a collision: \(contact.bodyA.categoryBitMask), \(contact.bodyB.categoryBitMask)")
+        
+        if(contact.bodyA.categoryBitMask > contact.bodyB.categoryBitMask) {
+            collider = contact.bodyA.node
+            victim = contact.bodyB.node
+        } else {
+            collider = contact.bodyB.node
+            victim = contact.bodyA.node
+        }
+        
+        if(collider is GameObject) {
+            (collider as! GameObject).collidedWith(victim)
+        }
+        
+        if(victim is GameObject) {
+            (victim as! GameObject).hitBy(collider)
         }
     }
     
@@ -81,7 +88,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         var touch: UITouch = touches.first as! UITouch
-        self.fingerPoint = touch.locationInNode(world)
+    
+        if(touch.tapCount == 1) {
+            self.fingerPoint = touch.locationInNode(world)
+        } else if(touch.tapCount >= 2) {
+            player.shoot(touch.locationInNode(world))
+        }
     }
     
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -95,5 +107,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
    
     override func update(currentTime: CFTimeInterval) {
         player.update(currentTime)
+        world.enumerateChildNodesWithName("bullet") {
+            node, stop in
+            var bullet = node as! Bullet
+            bullet.update(currentTime)
+        }
     }
 }

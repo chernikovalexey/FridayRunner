@@ -25,8 +25,8 @@ class Bullet: GameObject {
         self.physicsBody!.usesPreciseCollisionDetection = true
         
         self.physicsBody!.categoryBitMask = GameScene.O_BULLET
-        self.physicsBody!.collisionBitMask = GameScene.O_OBSTACLE
-        self.physicsBody!.contactTestBitMask = GameScene.O_OBSTACLE
+        self.physicsBody!.collisionBitMask = GameScene.O_OBSTACLE | GameScene.O_ANOTHERCH
+        self.physicsBody!.contactTestBitMask = GameScene.O_OBSTACLE | GameScene.O_ANOTHERCH
     }
         
     required init?(coder aDecoder: NSCoder) {
@@ -44,8 +44,8 @@ class Bullet: GameObject {
         if(self.owner != obj) {
             self.removeFromParent()
         
-            if(obj is Player) {
-                (obj as! Player).damage(10)
+            if(obj is Character) {
+                (obj as! Character).damage(40)
             }
         }
     }

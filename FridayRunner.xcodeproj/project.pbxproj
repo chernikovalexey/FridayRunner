@@ -28,6 +28,9 @@
 		0C3289181AE440E800E897CD /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3289171AE440E800E897CD /* Player.swift */; };
 		0C677D9D1AE5236500400B89 /* simple_bullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C677D9C1AE5236500400B89 /* simple_bullet.png */; };
 		0C677D9F1AE55ED300400B89 /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C677D9E1AE55ED300400B89 /* Bullet.swift */; };
+		0CEE9CCB1AE5B94700814901 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEE9CCA1AE5B94700814901 /* Character.swift */; };
+		0CFAC4101AE6FD4D00C2AFBA /* RegularEnemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFAC40F1AE6FD4D00C2AFBA /* RegularEnemy.swift */; };
+		0CFAC4121AE6FE0700C2AFBA /* regular_enemy.png in Resources */ = {isa = PBXBuildFile; fileRef = 0CFAC4111AE6FE0700C2AFBA /* regular_enemy.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +72,9 @@
 		0C3289171AE440E800E897CD /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		0C677D9C1AE5236500400B89 /* simple_bullet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = simple_bullet.png; sourceTree = "<group>"; };
 		0C677D9E1AE55ED300400B89 /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
+		0CEE9CCA1AE5B94700814901 /* Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		0CFAC40F1AE6FD4D00C2AFBA /* RegularEnemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegularEnemy.swift; sourceTree = "<group>"; };
+		0CFAC4111AE6FE0700C2AFBA /* regular_enemy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = regular_enemy.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,7 +121,9 @@
 				0C0242F21AE29CAB004B7AE5 /* JSTileMap */,
 				0C0242D21AE29C7A004B7AE5 /* GameScene.swift */,
 				0C3289141AE4401300E897CD /* GameObject.swift */,
+				0CEE9CCA1AE5B94700814901 /* Character.swift */,
 				0C3289171AE440E800E897CD /* Player.swift */,
+				0CFAC40F1AE6FD4D00C2AFBA /* RegularEnemy.swift */,
 				0C677D9E1AE55ED300400B89 /* Bullet.swift */,
 				0C0242D41AE29C7A004B7AE5 /* GameViewController.swift */,
 				0C0242CE1AE29C7A004B7AE5 /* AppDelegate.swift */,
@@ -202,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				0C0243041AE2A860004B7AE5 /* player.png */,
+				0CFAC4111AE6FE0700C2AFBA /* regular_enemy.png */,
 			);
 			name = Mobs;
 			path = FridayRunner/Resources/Mobs;
@@ -311,6 +320,7 @@
 				0C0243091AE3CE94004B7AE5 /* renderedLayout.png in Resources */,
 				0C0243011AE29DD8004B7AE5 /* start.tmx in Resources */,
 				0C0242DD1AE29C7A004B7AE5 /* LaunchScreen.xib in Resources */,
+				0CFAC4121AE6FE0700C2AFBA /* regular_enemy.png in Resources */,
 				0C0242DA1AE29C7A004B7AE5 /* Images.xcassets in Resources */,
 				0C677D9D1AE5236500400B89 /* simple_bullet.png in Resources */,
 				0C0242D11AE29C7A004B7AE5 /* GameScene.sks in Resources */,
@@ -332,8 +342,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CEE9CCB1AE5B94700814901 /* Character.swift in Sources */,
 				0C0242D31AE29C7A004B7AE5 /* GameScene.swift in Sources */,
 				0C0242F91AE29CAB004B7AE5 /* LFCGzipUtility.m in Sources */,
+				0CFAC4101AE6FD4D00C2AFBA /* RegularEnemy.swift in Sources */,
 				0C3289151AE4401300E897CD /* GameObject.swift in Sources */,
 				0C0242D51AE29C7A004B7AE5 /* GameViewController.swift in Sources */,
 				0C3289181AE440E800E897CD /* Player.swift in Sources */,

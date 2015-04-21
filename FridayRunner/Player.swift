@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Player: GameObject {
+class Player: Character {
     init(gameScene: GameScene, position: CGPoint) {
         super.init(gameScene: gameScene, texture: SKTexture(imageNamed: "player.png"))
         super.position = position
@@ -18,7 +18,7 @@ class Player: GameObject {
         self.physicsBody!.allowsRotation = false
         
         self.physicsBody!.categoryBitMask = GameScene.O_CHARACTER
-        self.physicsBody!.collisionBitMask = GameScene.O_OBSTACLE
+        self.physicsBody!.collisionBitMask = GameScene.O_OBSTACLE | GameScene.O_ANOTHERCH
         self.physicsBody!.contactTestBitMask = GameScene.O_OBSTACLE
     }
 
@@ -31,10 +31,6 @@ class Player: GameObject {
         var bullet: Bullet = Bullet(gameScene: gameScene, owner: self, position: CGPoint(x: self.position.x, y: self.position.y), direction: CGVector(dx: cos(angle), dy: sin(angle)))
         
         gameScene.world.addChild(bullet)
-    }
-    
-    func damage(points: Int) {
-        println("damage the player for ${points}")
     }
     
     override func update(currentTime: CFTimeInterval) {

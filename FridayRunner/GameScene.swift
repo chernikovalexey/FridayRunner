@@ -15,7 +15,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     static let O_OBSTACLE: UInt32 = 0x1 << 0
     static let O_CHARACTER: UInt32 = 0x1 << 1
-    static let O_BULLET: UInt32 = 0x1 << 2
+    static let O_ANOTHERCH: UInt32 = 0x1 << 2
+    static let O_BULLET: UInt32 = 0x1 << 3
     
     override func didMoveToView(view: SKView) {
         self.world = JSTileMap(named: "layout map.tmx")
@@ -26,6 +27,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.player = Player(gameScene: self, position: CGPoint(x: 124.0, y: world.mapSize.height / 2 * 48 - 48 / 2 + 100))
         world.addChild(player)
+        
+        var enemy: RegularEnemy = RegularEnemy(gameScene: self, position: CGPoint(x: 124.0, y: world.mapSize.height / 2 * 48 + 50))
+        world.addChild(enemy)
        
         placeCameraAboveEntity(player)
         

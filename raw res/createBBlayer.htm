@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>BB creator</title>
+<script type="text/javascript">
+function getText(){
+	var text = document.getElementById("inputArea").value;
+	convert(text,1,1);
+}
+function convert (inputText,Isize,Jsize) {
+	var mString = inputText.split('\n');
+	var matrix = new Array();
+
+	for(var i = 0; i < mString.length; ++i) { 
+		mString[i] = mString[i].replace('<tile gid="', '').replace('"/>', ''); 
+		matrix[i] = parseInt(mString[i])+100;
+		document.getElementById("outputArea").value=document.getElementById("outputArea").value+'<tile gid="'+matrix[i]+'"/>';
+		document.getElementById("outputArea").value=document.getElementById("outputArea").value+"\n";
+	}
+}
+</script>
+</head>
+<body>
+	<p>String</p>
+<textarea id="inputArea" value="" cols="20" rows="10"></textarea><br>
+<textarea id="outputArea" value="" cols="20" rows="10"></textarea><br>
+<input type="button" onclick="getText()" value="Convert"/>
+</body>
+</html>

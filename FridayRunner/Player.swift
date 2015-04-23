@@ -27,6 +27,7 @@ class Player: Character {
     }
     
     func shoot(at: CGPoint) {
+        println("coords: \(position.x), \(position.y)")
         let angle: CGFloat = atan2(at.y - position.y, at.x - position.x)
         var bullet: Bullet = Bullet(gameScene: gameScene, owner: self, position: CGPoint(x: self.position.x, y: self.position.y), direction: CGVector(dx: cos(angle), dy: sin(angle)))
         

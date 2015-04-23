@@ -655,7 +655,6 @@
     return [JSTileMap mapNamed:mapName withBaseZPosition:0.0f andZOrderModifier:-20.0f];
 }
 
-
 + (JSTileMap*)mapNamed:(NSString*)mapName withBaseZPosition:(CGFloat)baseZPosition andZOrderModifier:(CGFloat)zOrderModifier
 {
     // create the map
@@ -742,9 +741,38 @@
                     if (map.orientation == OrientationStyle_Isometric)
                     {
                         //#warning these appear to be incorrect for iso maps when used for tile objects!  Unsure why the math is different between objects and regular tiles.
-                        CGPoint coords = [map screenCoordToPosition:CGPointMake(x, y)];
-                        pt = CGPointMake((map.tileSize.width / 2.0) * (map.tileSize.width + coords.x - coords.y - 1),
-                                         (map.tileSize.height / 2.0) * (((map.tileSize.height * 2) - coords.x - coords.y) - 2));
+                        //CGPoint coords = [map screenCoordToPosition:CGPointMake(x, y)];
+                        /*pt = CGPointMake((map.tileSize.width / 2.0) * (map.tileSize.width + coords.x - coords.y - 1),
+                                         (map.tileSize.height / 2.0) * (((map.tileSize.height * 2) - coords.x - coords.y) - 2));*/
+ 
+                        /*CGFloat tw = map.tileSize.width;
+                        CGFloat th = map.tileSize.height;
+                        CGFloat originX = map.mapSize.height*tw/2;
+                        CGFloat ty = y/th;
+                        CGFloat tx = x/th;
+                        
+                        CGFloat ix = (tx-ty)*tw/2+originX;
+                        CGFloat iy = map.tileSize.height*map.mapSize.height - (tx+ty)*th/2;*/
+                        
+                        /*CGFloat tw = map.tileSize.width;
+                        CGFloat th = map.tileSize.height;
+                        CGFloat tx = x / (tw / 2);
+                        CGFloat ty = y / th;
+                        CGFloat originX = map.mapSize.height*tw/2;
+                        CGFloat ix = (tx - ty) * tw/2 + originX-tw/2;
+                        CGFloat iy = th * map.mapSize.height - ((tx + ty) * th/2);*/
+                        
+                        //ix -= tw / 2;
+                        //iy += th;
+                        
+                        //NSLog(@"Coord: %f %f", ix, iy);
+                        
+                        /* Fix of coordinates for iso is moved to parser part
+                         * In other words, it's fixed at the stage of parsing
+                         * Thereby, correct coordinates are available both for renderer and game world
+                         */
+                        
+                        pt = CGPointMake(x, y);
                         
                         //  NOTE:
                         //	iso zPositioning may not work as expected for maps with irregular tile sizes.  For larger tiles (i.e. a box in front of some floor
@@ -761,6 +789,7 @@
                     sprite.position = pt;
                     sprite.zPosition = baseZPosition + ((map.zOrderCount - objectGroup.zOrderCount) * zOrderModifier);
                     sprite.name = obj[@"name"];
+                    
                     [map addChild:sprite];
                     
                     //#warning This needs to be optimized into tilemap layers like our regular layers above for performance reasons.
@@ -1113,21 +1142,27 @@
         
         // But X and Y since they need special treatment
         // X
-        NSString *value = attributeDict[@"x"];
-        if( value )
-        {
-            int x = [value intValue] + objectGroup.positionOffset.x;
-            dict[@"x"] = @(x);
-        }
+        NSString *xval = attributeDict[@"x"];
+        NSString *yval = attributeDict[@"y"];
         
-        // Y
-        value = attributeDict[@"y"];
-        if( value )
+        if( xval && yval )
         {
-            int y = [value intValue] + objectGroup.positionOffset.y;
+            int x = [xval intValue] + objectGroup.positionOffset.x;
+            int y = [yval intValue] + objectGroup.positionOffset.y;
+            
             // Correct y position. (Tiled's origin is top-left. SpriteKit's origin is bottom-left)
-            y = (_mapSize.height * _tileSize.height) - y - [attributeDict[@"height"] intValue];
-            dict[@"y"] = @(y);
+            //y = (_mapSize.height * _tileSize.height) - y - [attributeDict[@"height"] intValue];
+            
+            CGFloat tw = self.tileSize.width;
+            CGFloat th = self.tileSize.height;
+            CGFloat tx = x / (tw / 2);
+            CGFloat ty = y / th;
+            CGFloat originX = self.mapSize.height * tw / 2;
+            CGFloat ix = (tx - ty) * tw / 2 + originX - tw / 2;
+            CGFloat iy = th * self.mapSize.height - ((tx + ty) * th / 2);
+            
+            dict[@"x"] = @(ix);
+            dict[@"y"] = @(iy);
         }
         
         // Add the object to the objectGroup

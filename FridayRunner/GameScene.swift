@@ -8,9 +8,18 @@
 
 import SpriteKit
 
-class GameScene: SKScene, SKPhysicsContactDelegate {
+/*extension GameScene: HUMAStarPathfinder {
+    func canWalkToNodeAtTileLocation(point: CGPoint) -> Bool {
+        
+    }
+}*/
+
+class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
     var world: JSTileMap!
     var player: Player!
+    var spawners: NSMutableArray!
+    var waypoints: NSMutableArray!
+    var pathfinder: HUMAStarPathfinder!
     var fingerPoint: CGPoint!
     
     static let O_OBSTACLE: UInt32 = 0x1 << 0
@@ -19,13 +28,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     static let O_BULLET: UInt32 = 0x1 << 3
     
     override func didMoveToView(view: SKView) {
-        self.world = JSTileMap(named: "layout map.tmx")
+        self.world = JSTileMap(named: "map20.tmx")
         self.addChild(world)
         
         // hide bb layer
         world.layerNamed("BB").hidden = true
         
-        self.player = Player(gameScene: self, position: CGPoint(x: 124.0, y: world.mapSize.height / 2 * 48 - 48 / 2 + 100))
+        //world.physicsBody! = SKPhysicsBody(frame: world.frame)
+        
+        self.player = Player(gameScene: self, position: CGPoint(x: 1300.0, y: world.mapSize.height / 2 * 48 - 48 / 2 + 100))
         world.addChild(player)
         
         var enemy: RegularEnemy = RegularEnemy(gameScene: self, position: CGPoint(x: 124.0, y: world.mapSize.height / 2 * 48 + 50))
@@ -34,8 +45,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         placeCameraAboveEntity(player)
         
         self.physicsWorld.contactDelegate = self
-        
-        var count: Int = 0
         
         // Possible bug: false size of layer identification
         // layer.map.mapSize may cause an error
@@ -48,22 +57,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 if(tile != nil) {
                     tile.name = "obstacle"
-                    
                     tile.physicsBody = SKPhysicsBody(texture: tile.texture!, size: CGSize(width: 96, height: 48))
-                    tile.physicsBody!.dynamic = false
                     
-                    tile.physicsBody!.categoryBitMask = GameScene.O_OBSTACLE
-                    
-                    ++count
+                    if(tile.physicsBody != nil) {
+                        tile.physicsBody!.dynamic = false
+                        tile.physicsBody!.categoryBitMask = GameScene.O_OBSTACLE
+                    }
                 }
             }
         }
+        
+        // todo
+        // hide object layer
+        //world.groupNamed("routes").hidden = true
+        self.spawners = world.groupNamed("spawners").objects
+        self.waypoints = world.groupNamed("routes").objects
+        
+        for waypoint in waypoints {
+            var x = waypoint.objectForKey("x") as! CGFloat
+            var y = waypoint.objectForKey("y") as! CGFloat
+            
+            var node: SKSpriteNode = SKSpriteNode(imageNamed: "player.png")
+            node.position = CGPoint(x: x, y: y)
+            world.addChild(node)
+        }
+        
+        self.pathfinder = HUMAStarPathfinder(tileMapSize: CGSize(width:0,height:0), tileSize: CGSize(width:0,height:0), delegate: self)
+        
+        //pathfinder.
+    }
+    
+    func pathfinder(pathfinder: HUMAStarPathfinder!, canWalkToNodeAtTileLocation tileLocation: CGPoint) -> Bool {
+        return true;
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
         var collider, victim: SKNode!
         
-        println("got a collision: \(contact.bodyA.categoryBitMask), \(contact.bodyB.categoryBitMask)")
+        //println("got a collision: \(contact.bodyA.categoryBitMask), \(contact.bodyB.categoryBitMask)")
         
         if(contact.bodyA.categoryBitMask > contact.bodyB.categoryBitMask) {
             collider = contact.bodyA.node

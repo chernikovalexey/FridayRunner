@@ -31,6 +31,10 @@
 		0CEE9CCB1AE5B94700814901 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEE9CCA1AE5B94700814901 /* Character.swift */; };
 		0CFAC4101AE6FD4D00C2AFBA /* RegularEnemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFAC40F1AE6FD4D00C2AFBA /* RegularEnemy.swift */; };
 		0CFAC4121AE6FE0700C2AFBA /* regular_enemy.png in Resources */ = {isa = PBXBuildFile; fileRef = 0CFAC4111AE6FE0700C2AFBA /* regular_enemy.png */; };
+		0CFAC4141AE7D1ED00C2AFBA /* wallsLayout.png in Resources */ = {isa = PBXBuildFile; fileRef = 0CFAC4131AE7D1ED00C2AFBA /* wallsLayout.png */; };
+		0CFAC4161AE7D1F500C2AFBA /* map20.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 0CFAC4151AE7D1F500C2AFBA /* map20.tmx */; };
+		0CFAC41D1AE91B4400C2AFBA /* HUMAStarPathfinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFAC41A1AE91B4400C2AFBA /* HUMAStarPathfinder.m */; };
+		0CFAC41E1AE91B4400C2AFBA /* HUMAStarPathfinderNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CFAC41C1AE91B4400C2AFBA /* HUMAStarPathfinderNode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +60,6 @@
 		0C0242E21AE29C7A004B7AE5 /* FridayRunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FridayRunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C0242E71AE29C7A004B7AE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C0242E81AE29C7A004B7AE5 /* FridayRunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridayRunnerTests.swift; sourceTree = "<group>"; };
-		0C0242F31AE29CAB004B7AE5 /* FridayRunner-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FridayRunner-Bridging-Header.h"; sourceTree = "<group>"; };
 		0C0242F41AE29CAB004B7AE5 /* JSTileMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTileMap.h; sourceTree = "<group>"; };
 		0C0242F51AE29CAB004B7AE5 /* JSTileMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTileMap.m; sourceTree = "<group>"; };
 		0C0242F61AE29CAB004B7AE5 /* LFCGzipUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFCGzipUtility.h; sourceTree = "<group>"; };
@@ -75,6 +78,13 @@
 		0CEE9CCA1AE5B94700814901 /* Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		0CFAC40F1AE6FD4D00C2AFBA /* RegularEnemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegularEnemy.swift; sourceTree = "<group>"; };
 		0CFAC4111AE6FE0700C2AFBA /* regular_enemy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = regular_enemy.png; sourceTree = "<group>"; };
+		0CFAC4131AE7D1ED00C2AFBA /* wallsLayout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wallsLayout.png; sourceTree = "<group>"; };
+		0CFAC4151AE7D1F500C2AFBA /* map20.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = map20.tmx; sourceTree = "<group>"; };
+		0CFAC4191AE91B4400C2AFBA /* HUMAStarPathfinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUMAStarPathfinder.h; sourceTree = "<group>"; };
+		0CFAC41A1AE91B4400C2AFBA /* HUMAStarPathfinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUMAStarPathfinder.m; sourceTree = "<group>"; };
+		0CFAC41B1AE91B4400C2AFBA /* HUMAStarPathfinderNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUMAStarPathfinderNode.h; sourceTree = "<group>"; };
+		0CFAC41C1AE91B4400C2AFBA /* HUMAStarPathfinderNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUMAStarPathfinderNode.m; sourceTree = "<group>"; };
+		0CFAC41F1AE91BDA00C2AFBA /* FridayRunner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FridayRunner-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +128,7 @@
 		0C0242CB1AE29C7A004B7AE5 /* FridayRunner */ = {
 			isa = PBXGroup;
 			children = (
+				0CFAC4181AE91B0B00C2AFBA /* AStar */,
 				0C0242F21AE29CAB004B7AE5 /* JSTileMap */,
 				0C0242D21AE29C7A004B7AE5 /* GameScene.swift */,
 				0C3289141AE4401300E897CD /* GameObject.swift */,
@@ -127,6 +138,7 @@
 				0C677D9E1AE55ED300400B89 /* Bullet.swift */,
 				0C0242D41AE29C7A004B7AE5 /* GameViewController.swift */,
 				0C0242CE1AE29C7A004B7AE5 /* AppDelegate.swift */,
+				0CFAC41F1AE91BDA00C2AFBA /* FridayRunner-Bridging-Header.h */,
 				0C0242FC1AE29DD8004B7AE5 /* Resources */,
 			);
 			path = FridayRunner;
@@ -161,7 +173,6 @@
 		0C0242F21AE29CAB004B7AE5 /* JSTileMap */ = {
 			isa = PBXGroup;
 			children = (
-				0C0242F31AE29CAB004B7AE5 /* FridayRunner-Bridging-Header.h */,
 				0C0242F41AE29CAB004B7AE5 /* JSTileMap.h */,
 				0C0242F51AE29CAB004B7AE5 /* JSTileMap.m */,
 				0C0242F61AE29CAB004B7AE5 /* LFCGzipUtility.h */,
@@ -192,6 +203,7 @@
 			children = (
 				0C0242FE1AE29DD8004B7AE5 /* start.tmx */,
 				0C02430A1AE3CE9D004B7AE5 /* layout map.tmx */,
+				0CFAC4151AE7D1F500C2AFBA /* map20.tmx */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -200,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				0C0243061AE3CE94004B7AE5 /* BBLayout.png */,
+				0CFAC4131AE7D1ED00C2AFBA /* wallsLayout.png */,
 				0C0243071AE3CE94004B7AE5 /* renderedLayout.png */,
 				0C0243001AE29DD8004B7AE5 /* floor.png */,
 			);
@@ -232,6 +245,17 @@
 			name = Bullets;
 			path = FridayRunner/Resources/Bullets;
 			sourceTree = SOURCE_ROOT;
+		};
+		0CFAC4181AE91B0B00C2AFBA /* AStar */ = {
+			isa = PBXGroup;
+			children = (
+				0CFAC4191AE91B4400C2AFBA /* HUMAStarPathfinder.h */,
+				0CFAC41A1AE91B4400C2AFBA /* HUMAStarPathfinder.m */,
+				0CFAC41B1AE91B4400C2AFBA /* HUMAStarPathfinderNode.h */,
+				0CFAC41C1AE91B4400C2AFBA /* HUMAStarPathfinderNode.m */,
+			);
+			path = AStar;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -319,7 +343,9 @@
 				0C02430B1AE3CE9D004B7AE5 /* layout map.tmx in Resources */,
 				0C0243091AE3CE94004B7AE5 /* renderedLayout.png in Resources */,
 				0C0243011AE29DD8004B7AE5 /* start.tmx in Resources */,
+				0CFAC4161AE7D1F500C2AFBA /* map20.tmx in Resources */,
 				0C0242DD1AE29C7A004B7AE5 /* LaunchScreen.xib in Resources */,
+				0CFAC4141AE7D1ED00C2AFBA /* wallsLayout.png in Resources */,
 				0CFAC4121AE6FE0700C2AFBA /* regular_enemy.png in Resources */,
 				0C0242DA1AE29C7A004B7AE5 /* Images.xcassets in Resources */,
 				0C677D9D1AE5236500400B89 /* simple_bullet.png in Resources */,
@@ -346,12 +372,14 @@
 				0C0242D31AE29C7A004B7AE5 /* GameScene.swift in Sources */,
 				0C0242F91AE29CAB004B7AE5 /* LFCGzipUtility.m in Sources */,
 				0CFAC4101AE6FD4D00C2AFBA /* RegularEnemy.swift in Sources */,
+				0CFAC41D1AE91B4400C2AFBA /* HUMAStarPathfinder.m in Sources */,
 				0C3289151AE4401300E897CD /* GameObject.swift in Sources */,
 				0C0242D51AE29C7A004B7AE5 /* GameViewController.swift in Sources */,
 				0C3289181AE440E800E897CD /* Player.swift in Sources */,
 				0C0242CF1AE29C7A004B7AE5 /* AppDelegate.swift in Sources */,
 				0C0242F81AE29CAB004B7AE5 /* JSTileMap.m in Sources */,
 				0C677D9F1AE55ED300400B89 /* Bullet.swift in Sources */,
+				0CFAC41E1AE91B4400C2AFBA /* HUMAStarPathfinderNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,7 +513,7 @@
 				INFOPLIST_FILE = FridayRunner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "FridayRunner/JSTileMap/FridayRunner-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "FridayRunner/FridayRunner-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -496,7 +524,7 @@
 				INFOPLIST_FILE = FridayRunner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "FridayRunner/JSTileMap/FridayRunner-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "FridayRunner/FridayRunner-Bridging-Header.h";
 			};
 			name = Release;
 		};

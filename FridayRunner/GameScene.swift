@@ -8,6 +8,20 @@
 
 import SpriteKit
 
+class Spawner {
+    var x, y: CGFloat!
+    
+    init(x: CGFloat, y: CGFloat) {
+        self.x = x
+        self.y = y
+    }
+    
+    init(properties: NSDictionary) {
+        self.x = properties.objectForKey("x") as! CGFloat
+        self.y = properties.objectForKey("y") as! CGFloat
+    }
+}
+
 class Waypoint {
     var next: Waypoint!
     var x, y: CGFloat!
@@ -35,63 +49,65 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
     var world: JSTileMap!
     var objects: SKNode!
     var player: Player!
-    var spawners: NSMutableArray!
+    var spawners: [String: Array<Spawner>!] = ["player": Array<Spawner>(), "enemies": Array<Spawner>()]
     var waypoints: Array<Waypoint> = Array<Waypoint>()
     var pathfinder: HUMAStarPathfinder!
-    var fingerPoint: CGPoint!
+    var startFingerPoint, currentFingerPoint: CGPoint!
     
     static let O_OBSTACLE: UInt32 = 0x1 << 0
     static let O_CHARACTER: UInt32 = 0x1 << 1
     static let O_ANOTHERCH: UInt32 = 0x1 << 2
     static let O_BULLET: UInt32 = 0x1 << 3
     
+    static let PATHFINDER_TILEWIDTH: CGFloat = 64
+    static let PATHFINDER_TILEHEIGHT: CGFloat = 64
+    
+    let SKIP_TICKS: Int = 6
+    var skippedTicks: Int = 0
+    
     override func didMoveToView(view: SKView) {
-        self.world = JSTileMap(named: "map20.tmx")
+        self.world = JSTileMap(named: "map21.tmx")
         self.addChild(world)
         
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
         
-        //world.layerNamed("BB").hidden = true
+        world.layerNamed("BB").hidden = true
         world.layerNamed("walls").hidden = true
 
         self.objects = SKNode()
-        for object in world.layerNamed("walls").children {
+        for object in world.layerNamed("walls").children[0].children {
             object.removeFromParent()
-            //objects.addChild(object as! SKNode)
+            objects.addChild(object as! SKNode)
         }
-        
-        self.player = Player(gameScene: self, position: CGPoint(x: 1200.0, y: world.mapSize.height / 2 * 48 - 48 / 2 + 150))
-        objects.addChild(player)
-        
-        var enemy: RegularEnemy = RegularEnemy(gameScene: self, position: CGPoint(x: 1100.0, y: world.mapSize.height / 2 * 48 - 48 / 2 + 150))
-        objects.addChild(enemy)
-        
-        placeCameraAboveEntity(player)
         
         world.addChild(objects)
         
-        for x in 0...Int(world.layerNamed("BB").map.mapSize.width) {
-            for y in 0...Int(world.layerNamed("BB").map.mapSize.height) {
-                var tile: SKSpriteNode! = world.layerNamed("BB").tileAtCoord(CGPoint(x: x, y: y))
-                
-                if(tile != nil) {
-                    tile.name = "obstacle"
-                    tile.physicsBody = SKPhysicsBody(texture: tile.texture!, size: CGSize(width: 96, height: 48))
-                    
-                    if(tile.physicsBody != nil) {
-                        tile.physicsBody!.dynamic = false
-                        tile.physicsBody!.categoryBitMask = GameScene.O_OBSTACLE
-                    }
-                }
-            }
+        self.player = Player(gameScene: self, position: CGPoint(x: 0, y: 0))
+        objects.addChild(player)
+        
+        for object in world.layerNamed("BB").children[0].children {
+            var tile: SKSpriteNode! = object as! SKSpriteNode
+            
+            tile.name = "obstacle"
+            tile.position.y -= 20
+            tile.physicsBody = SKPhysicsBody(texture: tile.texture!, size: CGSize(width: 96, height: 48))
+            
+            tile.physicsBody!.dynamic = false
+            tile.physicsBody!.categoryBitMask = GameScene.O_OBSTACLE
         }
         
-        // todo
-        // hide object layer
-        //world.groupNamed("routes").hidden = true
-        self.spawners = world.groupNamed("spawners").objects
+        var mapSpawners: NSMutableArray = world.groupNamed("spawners").objects
         var mapWaypoints: NSMutableArray = world.groupNamed("routes").objects
+        
+        for spawner in mapSpawners {
+            var isPlayer: Int32 = (spawner.objectForKey("isPlayer") as! NSString).intValue
+            if(isPlayer == 1) {
+                spawners["player"]!.append(Spawner(properties: spawner as! NSDictionary))
+            } else {
+                spawners["enemies"]!.append(Spawner(properties: spawner as! NSDictionary))
+            }
+        }
         
         var prev: Waypoint!
         for waypoint in mapWaypoints {
@@ -122,15 +138,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
             //printList(waypoint)
         }
         
-        let pathfinderTileWidth: CGFloat = 64
-        let pathfinderTileHeight: CGFloat = 64
+        self.pathfinder = HUMAStarPathfinder(tileMapSize: CGSize(width: world.mapSize.width * world.tileSize.width / GameScene.PATHFINDER_TILEWIDTH, height: world.mapSize.height * world.tileSize.height / GameScene.PATHFINDER_TILEHEIGHT), tileSize: CGSize(width: GameScene.PATHFINDER_TILEWIDTH, height: GameScene.PATHFINDER_TILEHEIGHT), delegate: self)
         
-        self.pathfinder = HUMAStarPathfinder(tileMapSize: CGSize(width: world.mapSize.width * world.tileSize.width / pathfinderTileWidth, height: world.mapSize.height * world.tileSize.height / pathfinderTileHeight), tileSize: CGSize(width: pathfinderTileWidth, height: pathfinderTileHeight), delegate: self)
+        spawnPlayer(player)
+        placeCameraAboveObject(player)
         
+        addEnemy()
+        
+        var light = SKLightNode()
+        light.position = player.position
+        light.enabled = false
+        light.categoryBitMask = 0x1 << 0
+        light.falloff = 2
+        world.addChild(light)
+    }
+    
+    func spawnPlayer(player: Player) {
+        var index: Int = Int(arc4random_uniform(UInt32(spawners["player"]!.count)))
+        var spawner: Spawner = spawners["player"]![index]
+        player.position.x = spawner.x - player.texture!.size().width / 2
+        player.position.y = spawner.y - player.texture!.size().height / 2
+    }
+    
+    func spawnEnemy(enemy: Character) {
+        var index: Int = Int(arc4random_uniform(UInt32(spawners["enemies"]!.count)))
+        //println(index)
+        var spawner: Spawner = spawners["enemies"]![index]
+        enemy.position.x = spawner.x - enemy.texture!.size().width / 2
+        enemy.position.y = spawner.y - enemy.texture!.size().height / 2
+    }
+    
+    func addEnemy() {
+        var enemy: RegularEnemy = RegularEnemy(gameScene: self, position: CGPoint(x: 0.0, y: 0.0))
+        objects.addChild(enemy)
+        spawnEnemy(enemy)
         enemy.findWay()
-        
-        //
-        //
         
         /*var s: SKShapeNode = SKShapeNode(rectOfSize: CGSize(width: 2, height: 2))
         s.position = enemy.aimWaypoint.point
@@ -163,7 +205,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
         
         if(nextId != nil) {
             var next = getObjectById(mapWaypoints, id: CGFloat((nextId as! NSString).floatValue))
-            waypoint.next = createWayRecursivelyFor(next!, mapWaypoints: mapWaypoints)
+            
+            if(next != nil) {
+                waypoint.next = createWayRecursivelyFor(next!, mapWaypoints: mapWaypoints)
+            }
         }
         
         return waypoint
@@ -254,35 +299,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
         
     }
     
-    func placeCameraAboveEntity(entity: SKSpriteNode) {
+    func placeCameraAboveObject(entity: SKSpriteNode) {
          world.position = CGPointMake(-(entity.position.x - self.size.width / 2), -(entity.position.y - self.size.height / 2))
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         var touch: UITouch = touches.first as! UITouch
     
-        if(touch.tapCount == 1) {
-            self.fingerPoint = touch.locationInNode(world)
-        } else if(touch.tapCount >= 2) {
-            player.shoot(touch.locationInNode(world))
-        }
+        self.startFingerPoint = touch.locationInNode(self)
+        
+        var s: SKShapeNode = SKShapeNode(rectOfSize: CGSize(width: 4, height: 4))
+        s.position = startFingerPoint
+        s.fillColor = SKColor.redColor()
+        world.addChild(s)
     }
     
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
         var touch: UITouch = touches.first as! UITouch
-        self.fingerPoint = touch.locationInNode(world)
+        self.currentFingerPoint = touch.locationInNode(self)
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        self.fingerPoint = nil
+        self.startFingerPoint = nil
+        self.currentFingerPoint = nil
     }
     
-    func sortDepth() {
+    func sortObjectsByDepth() {
         let sortedObjects = objects.children.sorted() {
-            let p0 = $0.position
-            let p1 = $1.position
+            let s1: SKSpriteNode! = $0 as! SKSpriteNode
+            let s2: SKSpriteNode! = $1 as! SKSpriteNode
+            let p1 = s1.position
+            let p2 = s2.position
             
-            if ((p0.x + (-p0.y)) > (p1.x + (-p1.y))) {
+            if (p2.y > p1.y) {
                 return false
             } else {
                 return true
@@ -291,7 +340,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
         
         for i in 0..<sortedObjects.count {
             let object: SKNode = (sortedObjects[i] as! SKNode)
-            println("Assign zPosition: \(i)")
             object.zPosition = CGFloat(i)
         }
     }
@@ -306,6 +354,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
             node, stop in
             (node as! Bullet).update(currentTime)
         }
-        sortDepth()
+        
+        ++skippedTicks
+        if(skippedTicks >= SKIP_TICKS) {
+            skippedTicks = 0
+            sortObjectsByDepth()
+        }
     }
 }

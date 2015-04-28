@@ -34,7 +34,7 @@ class Bullet: GameObject {
     }
     
     override func update(currentTime: CFTimeInterval) {
-        let speed: CGFloat = 20.0
+        let speed: CGFloat = 32.0
         let dx: CGFloat = direction.dx * speed * 5
         let dy: CGFloat = direction.dy * speed * 5
         self.physicsBody!.velocity = CGVector(dx: dx, dy: dy)

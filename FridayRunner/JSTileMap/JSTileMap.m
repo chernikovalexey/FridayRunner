@@ -1133,7 +1133,7 @@
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:10];
         
         // Parse everything automatically
-        NSArray *array = @[@"name", @"type", @"width", @"height", @"gid"];
+        NSArray *array = @[@"id", @"name", @"type", @"width", @"height", @"gid"];
         for( id key in array ) {
             NSObject *obj = attributeDict[key];
             if( obj )

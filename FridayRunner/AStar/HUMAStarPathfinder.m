@@ -46,7 +46,7 @@
 		_tileSize = tileSize;
 		_pathDiagonally = YES;
 		_pathCanCrossBorders = YES;
-		_ignoreDiagonalBarriers = NO;
+		_ignoreDiagonalBarriers = YES;
 		_distanceType = HUMAStarDistanceTypeManhattan;
 		_coordinateSystemOrigin = HUMCoodinateSystemOriginBottomLeft;
 		[self setBaseMovementCost:10];

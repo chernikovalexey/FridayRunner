@@ -305,13 +305,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         var touch: UITouch = touches.first as! UITouch
-    
         self.startFingerPoint = touch.locationInNode(self)
-        
-        var s: SKShapeNode = SKShapeNode(rectOfSize: CGSize(width: 4, height: 4))
-        s.position = startFingerPoint
-        s.fillColor = SKColor.redColor()
-        world.addChild(s)
     }
     
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {

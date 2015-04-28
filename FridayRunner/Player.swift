@@ -54,12 +54,6 @@ class Player: Character {
             
             sx = cos(angle) * speed
             sy = sin(angle) * speed
-        } else if(gameScene.startFingerPoint != nil && skippedTick) {
-            if(skippedTick) {
-                self.shoot(gameScene.startFingerPoint)
-            } else {
-                skippedTick = true
-            }
         }
         
         let accX = -self.physicsBody!.velocity.dx * groundFriction + sx

@@ -33,27 +33,31 @@ class RegularEnemy: Character {
     
     func findWay() {
         self.aimWaypoint = gameScene.getNearestWaypoint(self.position)
+        gameScene.checks = 0
         self.path = gameScene.pathfinder.findPathFromStart(self.position, toTarget: aimWaypoint.point)
-        
+        println("Checks of tiles: \(gameScene.checks)")
+        println(aimWaypoint.description)
         println(path)
-        //println(path.count)
     }
     
     override func update(currentTime: CFTimeInterval) {
         super.update(currentTime)
         
-        if(path != nil) {
+        if(path == nil) {
+            return
+        }
+        
         if(currentAim == nil && currentAimIndex + 1 < path.count) {
             currentAim = path[currentAimIndex++].CGPointValue()
         }
-        
+
         if(currentAim != nil) {
             let dist: CGFloat = sqrt(pow(position.x - currentAim.x, 2) + pow(position.y - currentAim.y, 2))
             let angle: CGFloat = atan2(currentAim.y - position.y, currentAim.x - position.x)
     
             self.physicsBody!.velocity = CGVector(dx: cos(angle) * 25 * 2, dy: sin(angle) * 25 * 2)
             
-            if(dist < 2) {
+            if(dist < 1) {
                 println("Reached a waypoint.")
                 
                 currentAim = nil
@@ -65,7 +69,9 @@ class RegularEnemy: Character {
                         gameScene.printList(aimWaypoint)
                         println("Getting the next node of the way.")
                         aimWaypoint = aimWaypoint.next
+                        gameScene.checks = 0
                         self.path = gameScene.pathfinder.findPathFromStart(self.position, toTarget: aimWaypoint.point)
+                        println("Checks of tiles: \(gameScene.checks)")
                         println(aimWaypoint.description)
                         println(path)
                         currentAimIndex = 0
@@ -73,13 +79,14 @@ class RegularEnemy: Character {
                         println("Looking for a new waypoint.")
                         self.aimWaypoint = gameScene.getNearestWaypoint(self.position)
                         gameScene.printList(aimWaypoint)
+                        gameScene.checks = 0
                         self.path = gameScene.pathfinder.findPathFromStart(self.position, toTarget: aimWaypoint.point)
+                        println("Checks of tiles: \(gameScene.checks)")
                         currentAimIndex = 0
                         currentAim = nil
                     }
                 }
             }
-        }
         }
     }
 }

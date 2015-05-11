@@ -59,14 +59,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
     static let O_ANOTHERCH: UInt32 = 0x1 << 2
     static let O_BULLET: UInt32 = 0x1 << 3
     
-    static let PATHFINDER_TILEWIDTH: CGFloat = 64
-    static let PATHFINDER_TILEHEIGHT: CGFloat = 64
+    static let PATHFINDER_TILEWIDTH: CGFloat = 48
+    static let PATHFINDER_TILEHEIGHT: CGFloat = 48
     
     let SKIP_TICKS: Int = 6
     var skippedTicks: Int = 0
     
     override func didMoveToView(view: SKView) {
-        self.world = JSTileMap(named: "map21.tmx")
+        self.world = JSTileMap(named: "map22.tmx")
         self.addChild(world)
         
         self.physicsWorld.contactDelegate = self
@@ -109,14 +109,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
             }
         }
         
-        var prev: Waypoint!
+        var hadPrev: Bool = false
         for waypoint in mapWaypoints {
             var w = createWayRecursivelyFor(waypoint as! NSDictionary, mapWaypoints: mapWaypoints)
             
             if(getLengthOfWay(w) > 1) {
                 waypoints.append(w)
             
-                if(prev == nil) {
+                if(!hadPrev) {
                     var revWaypoints: Array<Waypoint> = getWaypointsOfWayAsArray(w).reverse()
                     for i in 0...revWaypoints.count - 1 {
                         var rw = linkArrayOfWaypoints(Array<Waypoint>(revWaypoints[i...revWaypoints.count - 1]))
@@ -128,14 +128,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
                 }
                 
                 if(w.next != nil) {
-                    prev = w
+                    hadPrev = true
                 } else {
-                    prev = nil
+                    hadPrev = false
                 }
             }
         }
         for waypoint in waypoints {
-            //printList(waypoint)
+            printList(waypoint)
         }
         
         self.pathfinder = HUMAStarPathfinder(tileMapSize: CGSize(width: world.mapSize.width * world.tileSize.width / GameScene.PATHFINDER_TILEWIDTH, height: world.mapSize.height * world.tileSize.height / GameScene.PATHFINDER_TILEHEIGHT), tileSize: CGSize(width: GameScene.PATHFINDER_TILEWIDTH, height: GameScene.PATHFINDER_TILEHEIGHT), delegate: self)
@@ -149,7 +149,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
         light.position = player.position
         light.enabled = false
         light.categoryBitMask = 0x1 << 0
-        light.falloff = 2
+        light.falloff = 0.2
         world.addChild(light)
     }
     
@@ -162,7 +162,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
     
     func spawnEnemy(enemy: Character) {
         var index: Int = Int(arc4random_uniform(UInt32(spawners["enemies"]!.count)))
-        //println(index)
         var spawner: Spawner = spawners["enemies"]![index]
         enemy.position.x = spawner.x - enemy.texture!.size().width / 2
         enemy.position.y = spawner.y - enemy.texture!.size().height / 2
@@ -174,10 +173,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
         spawnEnemy(enemy)
         enemy.findWay()
         
-        /*var s: SKShapeNode = SKShapeNode(rectOfSize: CGSize(width: 2, height: 2))
-        s.position = enemy.aimWaypoint.point
+        /*println("----")
+        println("Intersections")
+        //println(world.nodeAtPoint(CGPoint(x: 1150-24, y: 678)))
+        println(world.nodeAtPoint(CGPoint(x: 1152-2, y: 676)))
+        
+        var s: SKShapeNode = SKShapeNode(rectOfSize: CGSize(width: 1, height: 1))
+        s.position = CGPoint(x: 1152-2, y: 676)
+        //s.an
         s.fillColor = SKColor.yellowColor()
-        world.addChild(s)*/
+        world.addChild(s)
+        
+        var s2: SKShapeNode = SKShapeNode(rectOfSize: CGSize(width: 4, height: 4))
+        s2.position = CGPoint(x: 1200, y: 700)
+        s2.fillColor = SKColor.purpleColor()
+        world.addChild(s2)*/
     }
     
     func getLengthOfWay(waypoint: Waypoint) -> Int {
@@ -201,7 +211,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
         var x = object.objectForKey("x") as! CGFloat
         var y = object.objectForKey("y") as! CGFloat
         var nextId: AnyObject? = object.objectForKey("next")
-        var waypoint: Waypoint! = Waypoint(x: x, y: y)
+        var waypoint: Waypoint! = Waypoint(x: x + 2, y: y - 48 - 24 / 2 - 2)
         
         if(nextId != nil) {
             var next = getObjectById(mapWaypoints, id: CGFloat((nextId as! NSString).floatValue))
@@ -261,18 +271,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
         return closest
     }
     
+    var checks: Int = 0
+    
     func pathfinder(pathfinder: HUMAStarPathfinder!, canWalkToNodeAtTileLocation tileLocation: CGPoint) -> Bool {
+        self.checks++
+        
         var location: CGPoint = pathfinder.positionForTileLocation(tileLocation)
         
-        var s: SKShapeNode = SKShapeNode(rectOfSize: CGSize(width: pathfinder.tileSize.width, height: pathfinder.tileSize.height))
-        s.position = CGPoint(x: location.x - pathfinder.tileSize.width / 2, y: location.y - pathfinder.tileSize.height / 2)
-        s.strokeColor = SKColor.whiteColor()
-        //world.addChild(s)
+        var x = location.x
+        var y = location.y
         
-        var node: SKNode = world.nodeAtPoint(CGPoint(x: location.x, y: location.y))
-        var body: SKPhysicsBody! = self.physicsWorld.bodyInRect(CGRect(x: location.x - pathfinder.tileSize.width / 2, y: location.y + pathfinder.tileSize.height / 2, width: pathfinder.tileSize.width, height: pathfinder.tileSize.height))
-        //println(body == nil)
-        return body == nil || (body != nil && body.node!.name == "enemy")
+        var points: [CGPoint] = [
+            CGPoint(x: x, y: y),
+            CGPoint(x: x - pathfinder.tileSize.width / 4, y: y),
+            CGPoint(x: x + pathfinder.tileSize.width / 4, y: y),
+            CGPoint(x: x, y: y - pathfinder.tileSize.height / 4),
+            CGPoint(x: x, y: y + pathfinder.tileSize.height / 4)
+        ]
+        
+        var intersections: Int = 0
+        
+        for point in points {
+            var node: SKNode! = world.nodeAtPoint(point as CGPoint)
+            
+            var s: SKShapeNode = SKShapeNode(rectOfSize: CGSize(width: 1, height: 1))
+            s.position = point as CGPoint
+            s.strokeColor = SKColor.redColor()
+            //world.addChild(s)
+            
+            if(node.name == "obstacle") {
+                ++intersections
+            }
+        }
+        
+        //println(intersections)
+        
+        return intersections <= 2
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -340,7 +374,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
    
     override func update(currentTime: CFTimeInterval) {
         player.update(currentTime)
-        world.enumerateChildNodesWithName("enemy") {
+        objects.enumerateChildNodesWithName("enemy") {
             node, stop in
             (node as! Character).update(currentTime)
         }

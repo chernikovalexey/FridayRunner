@@ -1224,7 +1224,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <objectgroup name="spawners">
+ <objectgroup name="spawners" visible="0">
   <object id="8" x="287.5" y="286.5" width="48" height="48">
    <properties>
     <property name="isPlayer" value="1"/>

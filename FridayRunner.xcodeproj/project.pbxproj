@@ -31,6 +31,7 @@
 		0C6D85331AEE2AB500E30418 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C6D85321AEE2AB500E30418 /* StoreKit.framework */; };
 		0C6D85351AEE2AD200E30418 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C6D85341AEE2AD200E30418 /* GameKit.framework */; };
 		0C9B9F3F1AEF982E009AED22 /* map21.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 0C9B9F3E1AEF982E009AED22 /* map21.tmx */; };
+		0C9B9F411AEFE32A009AED22 /* map22.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 0C9B9F401AEFE32A009AED22 /* map22.tmx */; };
 		0CEE9CCB1AE5B94700814901 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEE9CCA1AE5B94700814901 /* Character.swift */; };
 		0CF9D0D71AE9B0F20082CE6E /* wallsLayoutDev.png in Resources */ = {isa = PBXBuildFile; fileRef = 0CF9D0D61AE9B0F20082CE6E /* wallsLayoutDev.png */; };
 		0CF9D0D91AEA8A580082CE6E /* NPCRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF9D0D81AEA8A580082CE6E /* NPCRouter.swift */; };
@@ -83,6 +84,7 @@
 		0C6D85321AEE2AB500E30418 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0C6D85341AEE2AD200E30418 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		0C9B9F3E1AEF982E009AED22 /* map21.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = map21.tmx; sourceTree = "<group>"; };
+		0C9B9F401AEFE32A009AED22 /* map22.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = map22.tmx; sourceTree = "<group>"; };
 		0CEE9CCA1AE5B94700814901 /* Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		0CF9D0D61AE9B0F20082CE6E /* wallsLayoutDev.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wallsLayoutDev.png; sourceTree = "<group>"; };
 		0CF9D0D81AEA8A580082CE6E /* NPCRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NPCRouter.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				0C02430A1AE3CE9D004B7AE5 /* layout map.tmx */,
 				0CFAC4151AE7D1F500C2AFBA /* map20.tmx */,
 				0C9B9F3E1AEF982E009AED22 /* map21.tmx */,
+				0C9B9F401AEFE32A009AED22 /* map22.tmx */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				0C0242DD1AE29C7A004B7AE5 /* LaunchScreen.xib in Resources */,
 				0CFAC4141AE7D1ED00C2AFBA /* wallsLayout.png in Resources */,
 				0CFAC4121AE6FE0700C2AFBA /* regular_enemy.png in Resources */,
+				0C9B9F411AEFE32A009AED22 /* map22.tmx in Resources */,
 				0CF9D0D71AE9B0F20082CE6E /* wallsLayoutDev.png in Resources */,
 				0C0242DA1AE29C7A004B7AE5 /* Images.xcassets in Resources */,
 				0C677D9D1AE5236500400B89 /* simple_bullet.png in Resources */,

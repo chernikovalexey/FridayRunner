@@ -25,6 +25,7 @@
 @property (nonatomic, copy) NSMutableArray *openList;
 @property (nonatomic, copy) NSMutableArray *closedList;
 @property (nonatomic, copy) NSMutableArray *shortestPath;
+@property (nonatomic, copy) NSMutableArray *halfNodes;
 @end
 
 @implementation HUMAStarPathfinder
@@ -47,13 +48,14 @@
 		_pathDiagonally = YES;
 		_pathCanCrossBorders = YES;
 		_ignoreDiagonalBarriers = YES;
-		_distanceType = HUMAStarDistanceTypeManhattan;
+		_distanceType = HUMAStarDistanceTypeChebyshev;
 		_coordinateSystemOrigin = HUMCoodinateSystemOriginBottomLeft;
 		[self setBaseMovementCost:10];
 		_diagonalMovementCost = [self calculateDiagonalMovementCost];
 		_openList = [NSMutableArray array];
 		_closedList = [NSMutableArray array];
 		_shortestPath = [NSMutableArray array];
+        _halfNodes = [NSMutableArray array];
 		
 		[self setDelegate:delegate];
 	}
@@ -105,8 +107,8 @@
 	CGPoint startTileLocation = [self tileLocationForPosition:start];
 	CGPoint targetTileLocation = [self tileLocationForPosition:target];
 	
-	self.startNode = [HUMAStarPathfinderNode nodeWithLocation:startTileLocation];
-	self.targetNode = [HUMAStarPathfinderNode nodeWithLocation:targetTileLocation];
+    self.startNode = [HUMAStarPathfinderNode nodeWithLocation:startTileLocation];
+    self.targetNode = [HUMAStarPathfinderNode nodeWithLocation:targetTileLocation];
 	
 	if ([self.startNode isEqual:self.targetNode]) {
 		return nil;
@@ -114,9 +116,26 @@
 	
 	// check to make sure we can actually get a path to the target node
 	if (![self canWalkToNodeAtTileLocation:targetTileLocation]) {
-		return nil;
+        
+        // check adjacent tiles
+        bool canWalk = true;
+        NSArray *neighbors = [self findAdjacentNodesForNode:self.targetNode];
+        
+        for (HUMAStarPathfinderNode *node in neighbors) {
+            if(![self canWalkToNodeAtTileLocation:node.tileLocation]) {
+                canWalk = false;
+            } else {
+                targetTileLocation = node.tileLocation;
+                self.targetNode = node;
+            }
+        }
+        
+        if(!canWalk) {
+            return nil;
+        }
 	}
 
+    [_halfNodes removeAllObjects];
 	[self.openList removeAllObjects];
 	[self.closedList removeAllObjects];
 	[self.shortestPath removeAllObjects];
@@ -277,6 +296,15 @@
 	return heuristic;
 }
 
+- (BOOL)hasInHalfNodes:(HUMAStarPathfinderNode *)newNode {
+    for(HUMAStarPathfinderNode *node in _halfNodes) {
+        if(node.tileLocation.x == newNode.tileLocation.x && node.tileLocation.y == newNode.tileLocation.y) {
+            return true;
+        }
+    }
+    return false;
+}
+
 /**
  *	Finds all valid adjacent nodes neighboring the provided node.
  *
@@ -361,6 +389,57 @@
 		if (checkNorthWest &&[self isTileValidAtLocation:tileLocation] && [self canWalkToNodeAtTileLocation:tileLocation]) {
 			[neighbors addObject:[HUMAStarPathfinderNode nodeWithLocation:tileLocation]];
 		}
+        
+        
+        //
+        //
+        //
+        //
+        // Half nodes for isometry
+        //
+        //
+        //
+        //
+        
+        // Half NE node
+        tileLocation = CGPointMake(node.tileLocation.x + 0.5, node.tileLocation.y - 0.5);
+        if (checkNorthEast && [self isTileValidAtLocation:tileLocation] && [self canWalkToNodeAtTileLocation:tileLocation]) {
+            HUMAStarPathfinderNode *newNode = [HUMAStarPathfinderNode nodeWithLocation:tileLocation];
+            if(![self hasInHalfNodes:newNode]) {
+                [_halfNodes addObject:newNode];
+                [neighbors addObject:newNode];
+            }
+        }
+        
+        // Half SE node
+        tileLocation = CGPointMake(node.tileLocation.x + 0.5, node.tileLocation.y + 0.5);
+        if (checkSouthEast && [self isTileValidAtLocation:tileLocation] && [self canWalkToNodeAtTileLocation:tileLocation]) {
+            HUMAStarPathfinderNode *newNode = [HUMAStarPathfinderNode nodeWithLocation:tileLocation];
+            if(![self hasInHalfNodes:newNode]) {
+                [_halfNodes addObject:newNode];
+                [neighbors addObject:newNode];
+            }
+        }
+        
+        // Half SW node
+        tileLocation = CGPointMake(node.tileLocation.x - 0.5, node.tileLocation.y + 0.5);
+        if (checkSouthWest &&[self isTileValidAtLocation:tileLocation] && [self canWalkToNodeAtTileLocation:tileLocation]) {
+            HUMAStarPathfinderNode *newNode = [HUMAStarPathfinderNode nodeWithLocation:tileLocation];
+            if(![self hasInHalfNodes:newNode]) {
+                [_halfNodes addObject:newNode];
+                [neighbors addObject:newNode];
+            }
+        }
+        
+        // Half NW node
+        tileLocation = CGPointMake(node.tileLocation.x - 0.5, node.tileLocation.y - 0.5);
+        if (checkNorthWest &&[self isTileValidAtLocation:tileLocation] && [self canWalkToNodeAtTileLocation:tileLocation]) {
+            HUMAStarPathfinderNode *newNode = [HUMAStarPathfinderNode nodeWithLocation:tileLocation];
+            if(![self hasInHalfNodes:newNode]) {
+                [_halfNodes addObject:newNode];
+                [neighbors addObject:newNode];
+            }
+        }
 	}
 	return neighbors;
 }
@@ -426,7 +505,7 @@
 	CGFloat x = (tileLocation.x * tileSize.width) + tileSize.width / 2.0f;
 	CGFloat y = 0.0f;
 	
-	if (self.coordinateSystemOrigin == HUMCoodinateSystemOriginBottomLeft) {
+	if (self.coordinateSystemOrigin == HUMCoodinateSystemOriginBottomLeft) { // our case
 		y = (mapSize.height * tileSize.height) - (tileLocation.y * tileSize.height) - tileSize.height / 2.0f;
 	}
 	else if (self.coordinateSystemOrigin == HUMCoodinateSystemOriginTopLeft) {

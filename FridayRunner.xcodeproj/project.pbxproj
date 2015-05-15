@@ -25,6 +25,7 @@
 		0C02430B1AE3CE9D004B7AE5 /* layout map.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 0C02430A1AE3CE9D004B7AE5 /* layout map.tmx */; };
 		0C3289151AE4401300E897CD /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3289141AE4401300E897CD /* GameObject.swift */; };
 		0C3289181AE440E800E897CD /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3289171AE440E800E897CD /* Player.swift */; };
+		0C34443D1B069B31006E4477 /* player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 0C34443C1B069B31006E4477 /* player.atlas */; };
 		0C677D9D1AE5236500400B89 /* simple_bullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 0C677D9C1AE5236500400B89 /* simple_bullet.png */; };
 		0C677D9F1AE55ED300400B89 /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C677D9E1AE55ED300400B89 /* Bullet.swift */; };
 		0C6D85331AEE2AB500E30418 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C6D85321AEE2AB500E30418 /* StoreKit.framework */; };
@@ -79,6 +80,7 @@
 		0C02430A1AE3CE9D004B7AE5 /* layout map.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "layout map.tmx"; sourceTree = "<group>"; };
 		0C3289141AE4401300E897CD /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		0C3289171AE440E800E897CD /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		0C34443C1B069B31006E4477 /* player.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = player.atlas; sourceTree = "<group>"; };
 		0C677D9C1AE5236500400B89 /* simple_bullet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = simple_bullet.png; sourceTree = "<group>"; };
 		0C677D9E1AE55ED300400B89 /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
 		0C6D85321AEE2AB500E30418 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -242,6 +244,7 @@
 		0C0243031AE2A860004B7AE5 /* Mobs */ = {
 			isa = PBXGroup;
 			children = (
+				0C34443C1B069B31006E4477 /* player.atlas */,
 				0CE3B7BB1B01417B00162DE4 /* PLAYER.png */,
 				0CE3B7BC1B01417B00162DE4 /* ZOMBIE.png */,
 				0CFAC4111AE6FE0700C2AFBA /* regular_enemy.png */,
@@ -376,6 +379,7 @@
 				0C0243021AE29DD8004B7AE5 /* floor.png in Resources */,
 				0C02430B1AE3CE9D004B7AE5 /* layout map.tmx in Resources */,
 				0C0243091AE3CE94004B7AE5 /* renderedLayout.png in Resources */,
+				0C34443D1B069B31006E4477 /* player.atlas in Resources */,
 				0CE3B7BD1B01417B00162DE4 /* PLAYER.png in Resources */,
 				0C0243011AE29DD8004B7AE5 /* start.tmx in Resources */,
 				0CFAC4161AE7D1F500C2AFBA /* map20.tmx in Resources */,

@@ -10,11 +10,24 @@ import Foundation
 
 class Player: Character {
     var skippedTick: Bool = false
+    var state: Int = 5
+    
+    let angles: [CGFloat] = [0, 45, 90, 135, 180, 225, 270, 315]
+    
+    var textures: [CGFloat: [SKTexture]] = [CGFloat: [SKTexture]]()
     
     init(gameScene: GameScene, position: CGPoint) {
-        super.init(gameScene: gameScene, texture: SKTexture(imageNamed: "regular_enemy.png"))
-        //super.xScale = 0.5
-        //super.yScale = 0.5
+        var atlas: SKTextureAtlas = SKTextureAtlas(named: "player")
+        
+        for angle in angles {
+            textures[angle] = [SKTexture]()
+            for i in [5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6] {
+                textures[angle]!.append(atlas.textureNamed("p\(Int(angle))_\(i)"))
+            }
+        }
+        
+        var t: SKTexture = textures[270]!.first!
+        super.init(gameScene: gameScene, texture: t)
         super.position = position
         super.name = "player"
         
@@ -22,7 +35,7 @@ class Player: Character {
         super.lightingBitMask = 1;
         super.shadowedBitMask = 1;
         
-        self.physicsBody = SKPhysicsBody(texture: self.texture!, size: CGSize(width: 24, height: 24))
+        self.physicsBody = SKPhysicsBody(circleOfRadius: 12, center: CGPoint(x: 0, y: -16))
         self.physicsBody!.allowsRotation = false
         
         self.physicsBody!.categoryBitMask = GameScene.O_CHARACTER
@@ -42,6 +55,9 @@ class Player: Character {
         gameScene.world.addChild(bullet)
     }
     
+    var runningAction: Bool = false
+    var fixedAngleInDegrees: CGFloat = 270
+    
     override func update(currentTime: CFTimeInterval) {
         super.update(currentTime)
         
@@ -56,6 +72,34 @@ class Player: Character {
             
             sx = cos(angle) * speed
             sy = sin(angle) * speed
+            
+            var degAngle = angle * 180 / CGFloat(M_PI)
+            
+            if(degAngle < 0) {
+                degAngle += 360
+            }
+            
+            var prevAngle: CGFloat = self.fixedAngleInDegrees
+            var minDiff: CGFloat = CGFloat.max
+            for a in angles {
+                var diff: CGFloat = abs(a - degAngle)
+                if(diff < minDiff) {
+                    minDiff = diff
+                    self.fixedAngleInDegrees = a
+                }
+            }
+            
+            if(prevAngle != fixedAngleInDegrees) {
+                self.removeAllActions()
+                self.texture = textures[fixedAngleInDegrees]!.first!
+                runningAction = false
+            }
+            
+            if(!runningAction) {
+                runningAction = true
+                var move: SKAction = SKAction.animateWithTextures(textures[fixedAngleInDegrees]!, timePerFrame: 0.05, resize: true, restore: true)
+                self.runAction(SKAction.repeatActionForever(move))
+            }
         }
         
         let accX = -self.physicsBody!.velocity.dx * groundFriction + sx

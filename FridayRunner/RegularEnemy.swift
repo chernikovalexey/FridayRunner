@@ -109,25 +109,22 @@ class RegularEnemy: Character {
         return true
     }
     
-    let SKIP_UNVEAL_TICKS: Int = 6
-    var skippedUnvealTicks: Int = 0
-    
     override func update(currentTime: CFTimeInterval) {
         super.update(currentTime)
         
-        var distToPlayer = sqrt(pow(position.x - gameScene.player.position.x, 2) + pow(position.y - gameScene.player.position.y, 2))
+        //var distToPlayer = sqrt(pow(position.x - gameScene.player.position.x, 2) + pow(position.y - gameScene.player.position.y, 2))
         
         //println(canSee(gameScene.player))
         
-        if(distToPlayer < 100 && canSee(gameScene.player)) {
+        /*if(distToPlayer < 100 && canSee(gameScene.player)) {
             cursingPlayer = true
             let angle: CGFloat = atan2(gameScene.player.position.y - position.y, gameScene.player.position.x - position.x)
             self.physicsBody!.velocity = CGVector(dx: cos(angle) * 25 * 2, dy: sin(angle) * 25 * 2)
-        } else {
-            if(cursingPlayer) {
+        } else*/ if(true) {
+            /*if(cursingPlayer) {
                 cursingPlayer = false
                 findWay()
-            } else if(path == nil) {
+            } else*/ if(path == nil) {
                 return
             }
         

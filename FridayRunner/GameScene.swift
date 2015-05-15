@@ -395,6 +395,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.startFingerPoint = nil
         self.currentFingerPoint = nil
+        
+        // move to events
+        self.player.runningAction = false
+        self.player.removeAllActions()
     }
     
     func sortObjectsByDepth() {

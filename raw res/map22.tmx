@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="isometric" renderorder="left-up" width="20" height="20" tilewidth="96" tileheight="48" nextobjectid="27">
+<map version="1.0" orientation="isometric" renderorder="left-up" width="20" height="20" tilewidth="96" tileheight="48" nextobjectid="28">
  <tileset firstgid="1" name="wallsLayoutDev" tilewidth="96" tileheight="88">
   <image source="wallsLayoutDev.png" width="960" height="880"/>
   <terraintypes>
@@ -1224,7 +1224,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <objectgroup name="spawners">
+ <objectgroup name="spawners" visible="0">
   <object id="8" x="287.5" y="286.5" width="48" height="48">
    <properties>
     <property name="isPlayer" value="1"/>
@@ -1243,9 +1243,15 @@
    </properties>
    <ellipse/>
   </object>
+  <object id="27" x="357.5" y="102.5" width="48" height="48">
+   <properties>
+    <property name="next" value="23"/>
+   </properties>
+   <ellipse/>
+  </object>
  </objectgroup>
  <objectgroup name="routes">
-  <object id="17" x="341" y="103" width="48" height="48">
+  <object id="17" x="385" y="287" width="48" height="48">
    <properties>
     <property name="next" value="23"/>
    </properties>

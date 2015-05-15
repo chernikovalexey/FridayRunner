@@ -228,6 +228,10 @@
                     layerNode = [[SKNode alloc] init];
                     layerNodes[tilesetInfo.name] = layerNode;
                 }
+                
+                //sprite.xScale /= 2;
+                //sprite.yScale /= 2;
+                
                 [layerNode addChild:sprite];
                 
 #ifdef DEBUG

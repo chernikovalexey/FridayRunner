@@ -12,7 +12,9 @@ class Player: Character {
     var skippedTick: Bool = false
     
     init(gameScene: GameScene, position: CGPoint) {
-        super.init(gameScene: gameScene, texture: SKTexture(imageNamed: "player.png"))
+        super.init(gameScene: gameScene, texture: SKTexture(imageNamed: "regular_enemy.png"))
+        //super.xScale = 0.5
+        //super.yScale = 0.5
         super.position = position
         super.name = "player"
         
@@ -20,7 +22,7 @@ class Player: Character {
         super.lightingBitMask = 1;
         super.shadowedBitMask = 1;
         
-        self.physicsBody = SKPhysicsBody(texture: self.texture!, size: self.texture!.size())
+        self.physicsBody = SKPhysicsBody(texture: self.texture!, size: CGSize(width: 24, height: 24))
         self.physicsBody!.allowsRotation = false
         
         self.physicsBody!.categoryBitMask = GameScene.O_CHARACTER

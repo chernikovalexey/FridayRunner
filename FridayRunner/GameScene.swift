@@ -53,13 +53,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
     var waypoints: Array<Waypoint> = Array<Waypoint>()
     var pathfinder: HUMAStarPathfinder!
     var startFingerPoint, currentFingerPoint: CGPoint!
+    var walkability: Dictionary<String, Bool> = Dictionary<String, Bool>()
     
     static let O_OBSTACLE: UInt32 = 0x1 << 0
     static let O_CHARACTER: UInt32 = 0x1 << 1
     static let O_ANOTHERCH: UInt32 = 0x1 << 2
     static let O_BULLET: UInt32 = 0x1 << 3
     
-    static let PATHFINDER_TILEWIDTH: CGFloat = 48
+    static let PATHFINDER_TILEWIDTH: CGFloat = 96
     static let PATHFINDER_TILEHEIGHT: CGFloat = 48
     
     let SKIP_TICKS: Int = 6
@@ -140,6 +141,67 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
         
         self.pathfinder = HUMAStarPathfinder(tileMapSize: CGSize(width: world.mapSize.width * world.tileSize.width / GameScene.PATHFINDER_TILEWIDTH, height: world.mapSize.height * world.tileSize.height / GameScene.PATHFINDER_TILEHEIGHT), tileSize: CGSize(width: GameScene.PATHFINDER_TILEWIDTH, height: GameScene.PATHFINDER_TILEHEIGHT), delegate: self)
         
+        var isobst = {(node: SKNode) -> Bool in node.name == "obstacle"}
+        var check = {(pos: CGPoint) -> Bool in
+            /*var node_shiftup: SKNode! = self.world.nodeAtPoint(CGPoint(x: pos.x, y: pos.y + 5))
+            var node_shiftdown: SKNode! = self.world.nodeAtPoint(CGPoint(x: pos.x, y: pos.y - 5))
+            
+            return isok(node_shiftup) || isok(node_shiftdown)*/
+            
+            var nodes_shiftup: [AnyObject] = self.world.nodesAtPoint(CGPoint(x: pos.x, y: pos.y + 5))
+            var nodes_shiftdown: [AnyObject] = self.world.nodesAtPoint(CGPoint(x: pos.x, y: pos.y - 5))
+            
+            var has_up: Bool = false
+            var has_down: Bool = false
+            
+            for node in nodes_shiftup {
+                if(isobst(node as! SKNode)) {
+                    has_up = true
+                    break
+                }
+            }
+            
+            for node in nodes_shiftdown {
+                if(isobst(node as! SKNode)) {
+                    has_down = true
+                    break
+                }
+            }
+            
+            return !has_up || !has_down
+            
+            /*var nodes: [AnyObject] = self.world.nodesAtPoint(CGPoint(x: pos.x, y: pos.y + 5))
+            nodes += self.world.nodesAtPoint(CGPoint(x: pos.x, y: pos.y - 5))
+
+            for node in nodes {
+                if(isobst(node as! SKNode)) {
+                    return false
+                }
+            }
+            
+            return true*/
+        }
+        
+        let delta: CGFloat = 0.25
+        var x: CGFloat
+        var y: CGFloat
+        for x = 0; x < pathfinder.tileMapSize.width; x += delta {
+            for y = 0; y <= pathfinder.tileMapSize.height; y += delta {
+                var pos1 = pathfinder.positionForTileLocation(CGPoint(x: x, y: y))
+                var pos2 = pathfinder.positionForTileLocation(CGPoint(x: x - delta * 2, y: y))
+                var pos3 = pathfinder.positionForTileLocation(CGPoint(x: x + delta * 2, y: y))
+                var pos4 = pathfinder.positionForTileLocation(CGPoint(x: x, y: y - delta * 2))
+                var pos5 = pathfinder.positionForTileLocation(CGPoint(x: x, y: y + delta * 2))
+                
+                if(x % 1 != 0 || y % 1 != 0) {
+                    walkability["\(x),\(y)"] = check(pos1) && !(check(pos2) && check(pos3) && (!check(pos5) || !check(pos4)))
+                        && check(pos2)
+                } else {
+                    walkability["\(x),\(y)"] = check(pos1)
+                }
+            }
+        }
+        
         spawnPlayer(player)
         placeCameraAboveObject(player)
         
@@ -172,22 +234,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
         objects.addChild(enemy)
         spawnEnemy(enemy)
         enemy.findWay()
-        
-        /*println("----")
-        println("Intersections")
-        //println(world.nodeAtPoint(CGPoint(x: 1150-24, y: 678)))
-        println(world.nodeAtPoint(CGPoint(x: 1152-2, y: 676)))
-        
-        var s: SKShapeNode = SKShapeNode(rectOfSize: CGSize(width: 1, height: 1))
-        s.position = CGPoint(x: 1152-2, y: 676)
-        //s.an
-        s.fillColor = SKColor.yellowColor()
-        world.addChild(s)
-        
-        var s2: SKShapeNode = SKShapeNode(rectOfSize: CGSize(width: 4, height: 4))
-        s2.position = CGPoint(x: 1200, y: 700)
-        s2.fillColor = SKColor.purpleColor()
-        world.addChild(s2)*/
     }
     
     func getLengthOfWay(waypoint: Waypoint) -> Int {
@@ -271,6 +317,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
         return closest
     }
     
+    var ppts: Array<CGPoint> = Array<CGPoint>()
+    var squares: Array<CGPoint> = Array<CGPoint>()
     var checks: Int = 0
     
     func pathfinder(pathfinder: HUMAStarPathfinder!, canWalkToNodeAtTileLocation tileLocation: CGPoint) -> Bool {
@@ -281,32 +329,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate, HUMAStarPathfinderDelegate {
         var x = location.x
         var y = location.y
         
-        var points: [CGPoint] = [
-            CGPoint(x: x, y: y),
-            CGPoint(x: x - pathfinder.tileSize.width / 4, y: y),
-            CGPoint(x: x + pathfinder.tileSize.width / 4, y: y),
-            CGPoint(x: x, y: y - pathfinder.tileSize.height / 4),
-            CGPoint(x: x, y: y + pathfinder.tileSize.height / 4)
-        ]
-        
-        var intersections: Int = 0
-        
-        for point in points {
-            var node: SKNode! = world.nodeAtPoint(point as CGPoint)
-            
-            var s: SKShapeNode = SKShapeNode(rectOfSize: CGSize(width: 1, height: 1))
-            s.position = point as CGPoint
-            s.strokeColor = SKColor.redColor()
-            //world.addChild(s)
-            
-            if(node.name == "obstacle") {
-                ++intersections
-            }
+        if walkability["\(tileLocation.x),\(tileLocation.y)"] == nil {
+            return false
         }
         
-        //println(intersections)
+        var walkable: Bool = walkability["\(tileLocation.x),\(tileLocation.y)"]!
         
-        return intersections <= 2
+        if(walkable && find(squares, CGPoint(x: x, y: y)) == nil) {
+            squares.append(CGPoint(x: x, y: y))
+            
+            var s: SKShapeNode = SKShapeNode(rectOfSize: CGSize(width: 1, height: 1))
+            s.position = CGPoint(x: x, y: y + 5)
+            s.strokeColor = SKColor.redColor()
+            //world.addChild(s)
+        }
+        
+        return walkable
+    }
+    
+    func getRandomColor() -> SKColor {
+        var randomRed: CGFloat = CGFloat(drand48())
+        var randomGreen: CGFloat = CGFloat(drand48())
+        var randomBlue: CGFloat = CGFloat(drand48())
+        return SKColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
